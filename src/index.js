@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { WelcomeScreen } from './WelcomeScreen';
+import { Game } from './Game/Game.js';
+import { Header } from './Header';
+import { Footer } from './Footer';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import './css/style.css';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+export const App = () => {
+  const [appState, setAppState] = useState('welcome'); // play or welcome
+
+  const startPlay = () => {
+    setAppState('play');
+  };
+
+  // Renders either Welcome Screen or Game
+  return (
+    <React.Fragment>
+      <Header />
+      {appState === 'play' ? <Game /> : <WelcomeScreen startPlay={startPlay} />}
+      <Footer />
+    </React.Fragment>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
